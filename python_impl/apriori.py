@@ -33,9 +33,7 @@ class APriori:
 
         with open(filename, "r") as in_file:
             for line in in_file:
-                unique_words = set(line.split(delim))
-
-                for word in unique_words:
+                for word in set(line.split(delim)):
                     if word in freq_items_unfiltered:
                         freq_items_unfiltered[word] += 1
                     else:
