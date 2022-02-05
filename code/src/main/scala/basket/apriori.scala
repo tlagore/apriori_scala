@@ -7,7 +7,6 @@ package basket
 
 object aPriori {
 
-
   def mergeAndSumMaps[K](items: Map[K, Int], newItems:Map[K,Int]) : Map[K,Int] = {
     // fold the newItems into the existing items
     // if the key for the new item is present, add the frequencies of the items, else
@@ -28,8 +27,6 @@ object aPriori {
    *   - 3 tuple (count of items in basket:Int, support:Int, frequent items: Items)
    */
   def doFirstPass(threshold: Double, lines: Iterator[String], delim:String): (Int, Int, Items) = {
-    println("In do first pass")
-
     val (count, items):(Int,Items) = lines.foldLeft((0, Map[Elem,Int]()))( (accum, line) => {
       val newItemMap: Items = extractItemsFromLine(line, delim)
       (accum._1 + 1, mergeAndSumMaps(accum._2, newItemMap))
@@ -43,17 +40,17 @@ object aPriori {
   }
 
   def extractItemsFromLine(line: String, delim: String): Items = {
-    val itemsInBasket:List[String] = line.split(delim).toList.map(item=> item.toLowerCase)
+    val itemsInBasket:List[String] = line.split(delim).toList
     itemsInBasket.zip(List.fill(itemsInBasket.length)(1)).toMap
   }
 
   def doSecondPass(supportT: Int, items: Items, lines: Iterator[String], delim:String): FreqPairs =
   {
     val freqPairs:FreqPairs = lines.foldLeft(Map[(Elem,Elem), Int]())((accum, line) => {
-      val itemMap: Items = extractItemsFromLine(line, delim)
+      val basketItemMap: Items = extractItemsFromLine(line, delim)
 
       val frequentItems: Iterable[Elem] = for {
-        item <- itemMap
+        item <- basketItemMap
         if (items.contains(item._1))
       } yield item._1
 
@@ -74,17 +71,18 @@ object aPriori {
         }
       )
 
+      // merge these results with the running results
       mergeAndSumMaps(accum, newFreqMap)
-    }).foldLeft(Map[(Elem,Elem),Int]())(
+    })
+    .foldLeft(Map[(Elem,Elem),Int]())(
       (op, pair) =>
       {
         // sum and remove duplicates (a,b)->n, (b,a)->m = (a,b)->n+m
         val freq = pair._2 + op.get((pair._1._2, pair._1._1)).getOrElse(pair._2)
         if (op.contains((pair._1._2, pair._1._1))) op else op + (pair._1-> freq)
       }
-    ).filter (_._2 >= supportT)
-
-    println(freqPairs)
+    )
+    .filter (_._2 >= supportT)
 
     freqPairs
   }
