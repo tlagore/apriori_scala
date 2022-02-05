@@ -34,10 +34,11 @@ class APriori:
         with open(filename, "r") as in_file:
             for line in in_file:
                 for word in set(line.split(delim)):
-                    if word in freq_items_unfiltered:
-                        freq_items_unfiltered[word] += 1
+                    w = word.strip()
+                    if w in freq_items_unfiltered:
+                        freq_items_unfiltered[w] += 1
                     else:
-                        freq_items_unfiltered[word] = 1
+                        freq_items_unfiltered[w] = 1
 
                 count += 1
 
@@ -51,8 +52,42 @@ class APriori:
         return (count, support, freq_items_filtered)
 
 
+    def permute(self, lst: list):
+        if len(lst) > 1:
+            for idx, item in enumerate(lst):
+                for item2 in lst[idx+1:]:
+                    yield (item,item2)
+        else:
+            return []
+
     def secondPass(self, filename:str, delim:str, support:int, items:dict[str,int]) -> dict[(str,str), int]:
-        pass
+        freq_pairs = {}
+
+        with open(filename, "r") as in_file:
+            for line in in_file:
+                frequent = []
+                for word in set(line.split(delim)):
+                    w = word.strip()
+                    if w in items:
+                        frequent.append(w)
+
+                permutations = list(self.permute(frequent))
+
+                for permutation in permutations:
+                    if permutation in freq_pairs:
+                        freq_pairs[permutation] += 1
+                    elif (permutation[1], permutation[0]) in freq_pairs:
+                        freq_pairs[(permutation[1], permutation[0])] += 1
+                    else:
+                        freq_pairs[permutation] = 1
+
+        freq_pairs_filtered = {}
+
+        for key in freq_pairs:
+            if freq_pairs[key] >= support:
+                freq_pairs_filtered[key] = freq_pairs[key]
+
+        return freq_pairs_filtered
 
 
 if __name__ == "__main__":
@@ -79,3 +114,5 @@ if __name__ == "__main__":
     print(f"""{count} records, only {len(items)} item{"s" if (len(items) > 1) else ""} above support threshold {support} ({threshold}).""")
 
     freq_pairs = apriori.secondPass(filename, delim, support, items)
+
+    print(f"""{len(freq_pairs)} frequent pair{"s" if (len(freq_pairs) > 1) else ""}""")
