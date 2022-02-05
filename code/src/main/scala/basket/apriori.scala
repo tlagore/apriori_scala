@@ -8,7 +8,7 @@ package basket
 object aPriori {
 
 
-  def mergeBaskets(items: Items, newItems:Items) : Items = {
+  def mergeAndSumMaps[K](items: Map[K, Int], newItems:Map[K,Int]) : Map[K,Int] = {
     // fold the newItems into the existing items
     // if the key for the new item is present, add the frequencies of the items, else
     // default to the value of the new item
@@ -31,22 +31,60 @@ object aPriori {
     println("In do first pass")
 
     val (count, items):(Int,Items) = lines.foldLeft((0, Map[Elem,Int]()))( (accum, line) => {
-      val itemsInBasket:List[String] = line.split(delim).toList.map(item=> item.toLowerCase)
-      val newItemMap:Items = itemsInBasket.zip(List.fill(itemsInBasket.length)(1)).toMap
-      (accum._1 + 1, mergeBaskets(accum._2, newItemMap))
+      val newItemMap: Items = extractItemsFromLine(line, delim)
+      (accum._1 + 1, mergeAndSumMaps(accum._2, newItemMap))
     })
 
+    // calculate support and filter based on this
     val support:Int = (count * threshold).toInt
     val filtered:Items = items.filter(_._2 >= support)
-
-    print(filtered)
 
     (count, support, filtered)
   }
 
+  def extractItemsFromLine(line: String, delim: String): Items = {
+    val itemsInBasket:List[String] = line.split(delim).toList.map(item=> item.toLowerCase)
+    itemsInBasket.zip(List.fill(itemsInBasket.length)(1)).toMap
+  }
+
   def doSecondPass(supportT: Int, items: Items, lines: Iterator[String], delim:String): FreqPairs =
   {
-    val freqPairs:FreqPairs = Map()
+    val freqPairs:FreqPairs = lines.foldLeft(Map[(Elem,Elem), Int]())((accum, line) => {
+      val itemMap: Items = extractItemsFromLine(line, delim)
+
+      val frequentItems: Iterable[Elem] = for {
+        item <- itemMap
+        if (items.contains(item._1))
+      } yield item._1
+
+      // first generate all tuples
+      val freqPairsT = (for {
+        f1 <- frequentItems
+        f2 <- frequentItems
+
+        if (f1 != f2)
+      } yield (f1,f2)->1).toMap
+
+      // then remove the ones that are cases of (a,b), (b,a)
+      // i.e. if list was [(a,b)->1, (b,a)->1], this would return [(a,b)->1]
+      val newFreqMap: FreqPairs = freqPairsT.foldLeft(Map[(Elem,Elem),Int]())(
+        (op, pair) =>
+        {
+          if (op.contains((pair._1._2, pair._1._1))) op else op + pair
+        }
+      )
+
+      mergeAndSumMaps(accum, newFreqMap)
+    }).foldLeft(Map[(Elem,Elem),Int]())(
+      (op, pair) =>
+      {
+        // sum and remove duplicates (a,b)->n, (b,a)->m = (a,b)->n+m
+        val freq = pair._2 + op.get((pair._1._2, pair._1._1)).getOrElse(pair._2)
+        if (op.contains((pair._1._2, pair._1._1))) op else op + (pair._1-> freq)
+      }
+    ).filter (_._2 >= supportT)
+
+    println(freqPairs)
 
     freqPairs
   }

@@ -37,6 +37,8 @@ object Main extends App {
 
   val freqPairs = aPriori.doSecondPass(supportT, items, lines(filename), delim)
 
+  println(s"""${freqPairs.size} frequent pair${if (freqPairs.size > 1) "s" else ""}""")
+
   aPriori.doResults(count, items, freqPairs, limit)
 
 
