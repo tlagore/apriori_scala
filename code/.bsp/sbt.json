@@ -1,0 +1,1 @@
+{"name":"sbt","version":"1.6.1","bspVersion":"2.0.0-M5","languages":["scala"],"argv":["/usr/lib/jvm/java-11-openjdk-11.0.13.0.8-2.fc35.x86_64/bin/java","-Xms100m","-Xmx100m","-classpath","/home/tyronelagore/.cache/sbt/boot/sbt-launch/1.6.1/sbt-launch-1.6.1.jar","-Dsbt.script=/usr/bin/sbt","xsbt.boot.Boot","-bsp"]}

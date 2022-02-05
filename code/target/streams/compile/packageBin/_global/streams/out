@@ -1,0 +1,27 @@
+[0m[[0m[0mdebug[0m] [0m[0mPackaging /home/tyronelagore/school/csc502/assignments/2/code/target/scala-2.13/basket_2.13-1.0.jar ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	basket[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/tyronelagore/school/csc502/assignments/2/code/target/scala-2.13/classes/basket[0m
+[0m[[0m[0mdebug[0m] [0m[0m	basket/Main$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/tyronelagore/school/csc502/assignments/2/code/target/scala-2.13/classes/basket/Main$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	basket/Main.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/tyronelagore/school/csc502/assignments/2/code/target/scala-2.13/classes/basket/Main.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	basket/Main$delayedInit$body.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/tyronelagore/school/csc502/assignments/2/code/target/scala-2.13/classes/basket/Main$delayedInit$body.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	basket/package$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/tyronelagore/school/csc502/assignments/2/code/target/scala-2.13/classes/basket/package$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	basket/package.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/tyronelagore/school/csc502/assignments/2/code/target/scala-2.13/classes/basket/package.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	basket/Result.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/tyronelagore/school/csc502/assignments/2/code/target/scala-2.13/classes/basket/Result.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	basket/Result$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/tyronelagore/school/csc502/assignments/2/code/target/scala-2.13/classes/basket/Result$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	basket/output$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/tyronelagore/school/csc502/assignments/2/code/target/scala-2.13/classes/basket/output$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	basket/output.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/tyronelagore/school/csc502/assignments/2/code/target/scala-2.13/classes/basket/output.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	basket/aPriori$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/tyronelagore/school/csc502/assignments/2/code/target/scala-2.13/classes/basket/aPriori$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	basket/aPriori.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/tyronelagore/school/csc502/assignments/2/code/target/scala-2.13/classes/basket/aPriori.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mDone packaging.[0m

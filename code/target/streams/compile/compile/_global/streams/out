@@ -1,0 +1,4 @@
+[0m[[0m[31merror[0m] [0m[0m/home/tyronelagore/school/csc502/assignments/2/code/src/main/scala/basket/apriori.scala:12:58: value length is not a member of scala.collection.immutable.Map[basket.Elem,Int][0m
+[0m[[0m[31merror[0m] [0m[0m    (items++newItems).groupBy(_._1).map(x => (x._1, x._2.length))[0m
+[0m[[0m[31merror[0m] [0m[0m                                                         ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

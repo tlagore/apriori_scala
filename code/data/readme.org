@@ -1,0 +1,18 @@
+* Data files provided
+
+| good-movies.csv | All actors/actresses in movies with more than 10,000 votes in the IMDB circa 2018           |
+| market.csv      | Online dataset from Kaggle https://www.kaggle.com/devchauhan1/market-basket-optimisationcsv |
+| online.csv      | Online dataset from https://www.kaggle.com/mrmining/online-retail transcoded by me          |
+
+I have uploaded an extra dataset with all movies. See brightspace for details.
+
+* Tests
+
+3 tests.
+
+- The script to run it has the extension .sh
+- The expected output is .expected
+
+Note that all scripts are run from the directory where the sbt file is located
+
+
