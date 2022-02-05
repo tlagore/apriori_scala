@@ -9,11 +9,12 @@ object aPriori {
 
 
   def mergeBaskets(items: Items, newItems:Items) : Items = {
-    // unwrap maps into lists of tuples,
-    //  -> group by the first element of tuple. Result is Map of item -> List of tuples of same item
-    //  -> map item name to key, sum of list of tuples of same items frequency
-    //  -> result is merged map with element indexes summed
-    (items.toList++newItems.toList).groupBy(_._1).map(x => (x._1, x._2.foldLeft(0)((acc,el)=>acc+el._2)))
+    // fold the newItems into the existing items
+    // if the key for the new item is present, add the frequencies of the items, else
+    // default to the value of the new item
+    newItems.foldLeft(items) {
+      case (item_set, (key,value)) => item_set + (key -> item_set.get(key).map(_ + value).getOrElse(value))
+    }
   }
 
   /** Performs first pass of the apriori algorithm
@@ -38,7 +39,9 @@ object aPriori {
     val support:Int = (count * threshold).toInt
     val filtered:Items = items.filter(_._2 >= support)
 
-    (count, support, items)
+    print(filtered)
+
+    (count, support, filtered)
   }
 
   def doSecondPass(supportT: Int, items: Items, lines: Iterator[String], delim:String): FreqPairs =
