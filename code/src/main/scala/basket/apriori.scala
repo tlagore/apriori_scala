@@ -62,7 +62,7 @@ object aPriori {
         if (f1 != f2)
       } yield (f1,f2)->1).toMap
 
-      // then remove the ones that are cases of (a,b), (b,a)
+      // then remove the ones that are cases of (a,b), (b,a) within basket
       // i.e. if list was [(a,b)->1, (b,a)->1], this would return [(a,b)->1]
       val newFreqMap: FreqPairs = freqPairsT.foldLeft(Map[(Elem,Elem),Int]())(
         (op, pair) =>
@@ -74,14 +74,17 @@ object aPriori {
       // merge these results with the running results
       mergeAndSumMaps(accum, newFreqMap)
     })
+    // sum and remove duplicates (a,b)->n, (b,a)->m = (a,b)->n+m
+    // these would have been added from separate baskets
     .foldLeft(Map[(Elem,Elem),Int]())(
       (op, pair) =>
       {
-        // sum and remove duplicates (a,b)->n, (b,a)->m = (a,b)->n+m
+
         val freq = pair._2 + op.get((pair._1._2, pair._1._1)).getOrElse(pair._2)
         if (op.contains((pair._1._2, pair._1._1))) op else op + (pair._1-> freq)
       }
     )
+    // filter out those that are not to our support threshold
     .filter (_._2 >= supportT)
 
     freqPairs
