@@ -143,19 +143,19 @@ class APriori:
         else:
             self.printResults(sorted_list)
 
-        print("Found {0} records.{1}".format(len(sorted_list), " Printed only {0}.".format(limit) if limit else ""))
+        print("Found {0} records.{1}".format(len(sorted_list), " Printed only {0}.".format(limit) if limit and limit < len(results) else ""))
 
     def printResults(self, results: list[Result]):
         maxWidth = len(max(results, key=lambda res:len(res.item)).item) + 2
         maxWidth2 = len(max(results, key=lambda res:len(res.boughtWith)).boughtWith) + 2
 
-        header = "SupportPair-{item:<{maxWidth}}- Freq -Support-${boughtWith:<{maxWidth2}}- FreqPair-Confidence-     Lift".format(item="Item", maxWidth=maxWidth, boughtWith="Bought with", maxWidth2=maxWidth2)
+        header = "SupportPair-{item:<{maxWidth}}- Freq -Support-{boughtWith:<{maxWidth2}}- FreqPair-Confidence-     Lift".format(item="Item", maxWidth=maxWidth, boughtWith="Bought with", maxWidth2=maxWidth2)
         sep = ['-'] * len(header)
         print(header)
         print(''.join(sep))
         # s"  %9.6f %-${maxWidth}s %5d %8.6f %-${maxWidth2}s %5d %10.2f %9.3f".format(
         for res in results:
-            print("  {0:9.6f} {1:<{maxWidth}} {2:5d} {3:8.6f} {4:<{maxWidth2}} {5:5d} {6:10.2f} {7:9.3f}".format(
+            print("  {0:9.6f} {1:<{maxWidth}} {2:5d} {3:8.6f} {4:<{maxWidth2}} {5:9d} {6:10.2f} {7:>9.3f}".format(
                 res.supportPair, res.item, res.freqItem, res.support, res.boughtWith, res.freqPair, 
                 res.confidence, res.lift, maxWidth=maxWidth, maxWidth2=maxWidth2
             ))
