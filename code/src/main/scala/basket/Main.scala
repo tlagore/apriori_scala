@@ -37,13 +37,5 @@ object Main extends App {
 
   val freqPairs = aPriori.doSecondPass(supportT, items, lines(filename), delim)
 
-  println(s"""${freqPairs.size} frequent pair${if (freqPairs.size > 1) "s" else ""}""")
-  val flattened = freqPairs.foldLeft(List[(Elem,Elem,Int)]())((acc, el) => acc :+ (el._1._1, el._1._2, el._2)).sortBy(_._3).filter(row => row._1 == "roses regency teacup and saucer" || row._2 == "roses regency teacup and saucer")
-
-  flattened.foreach(println(_))
-
-
   aPriori.doResults(count, items, freqPairs, limit)
-
-
 }
