@@ -174,8 +174,8 @@ if __name__ == "__main__":
 
     limit = int(sys.argv[4]) if len(sys.argv) == 5 else None
 
-    print(f"Running with parameters: Filename [{filename}] Separator [{delim}] Minimum relative support threshold [{threshold}]." 
-        + "" if limit is None else f" Print at most {limit} tuples.")
+    print(f"Running with parameters: Filename [{filename}] Separator [{delim}] Minimum relative support threshold [{threshold}].")
+    print("" if limit is None else f"Print at most {limit} tuples.\n")
 
 
     apriori = APriori()
