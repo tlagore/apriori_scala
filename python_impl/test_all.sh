@@ -1,4 +1,12 @@
 #!/bin/bash
+if [ -z "$1" ];
+then
+      echo "data_directory must be supplied. Usage is \"sh test_all.sh data_directory/\""
+      exit -1
+fi
+
+data_dir=$1
+
 function test_res {
     f1=$1
     f2=$2
@@ -19,15 +27,15 @@ function test_res {
 }
 
 echo "Running test 1"
-python apriori.py ../code/data/good-movies.csv ";" 0.001 30 > test01.results
+python apriori.py $data_dir/good-movies.csv ";" 0.001 30 > test01.results
 echo "Running test 2"
-python apriori.py ../code/data/market.csv "," 0.03 > test02.results
+python apriori.py $data_dir/market.csv "," 0.03 > test02.results
 echo "Running test 3"
-python apriori.py ../code/data/online.csv "," 0.025 50 > test03.results
+python apriori.py $data_dir/online.csv "," 0.025 50 > test03.results
 
-test_res test01.results ../code/data/test-01.expected "01"
-test_res test02.results ../code/data/test-02.expected "02"
-test_res test03.results ../code/data/test-03.expected "03"
+test_res test01.results $data_dir/test-01.expected "01"
+test_res test02.results $data_dir/test-02.expected "02"
+test_res test03.results $data_dir/test-03.expected "03"
 
 rm test01.results
 rm test02.results
