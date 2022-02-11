@@ -1,7 +1,7 @@
 9687 records, only 6616 items above support threshold 9 (0.001).
 
-SupportPair-Item                      - Freq -Support-Bought with               - FreqPair-Confidence-     Lift
----------------------------------------------------------------------------------------------------------------
+SupportPair-Item                      - Freq -Support-Bought with           - FreqPair-Confidence-     Lift
+-----------------------------------------------------------------------------------------------------------
    0.000929 Clinkenbeard, Colleen         10 0.001032 Stoddard, Mark (I)             9       1.00   968.700
    0.000929 Stole, Mink                   11 0.001136 Pearce, Mary Vivian            9       1.00   880.636
    0.001032 McFarland, Mike (II)          12 0.001239 Clinkenbeard, Colleen         10       1.00   807.250
@@ -32,5 +32,5 @@ SupportPair-Item                      - Freq -Support-Bought with               
    0.001652 Lynn, Sherry (I)              43 0.004439 Cygan, John (I)               16       1.00   225.279
    0.001652 Travolta, John (I)            44 0.004542 Loren, Nick                   16       1.00   220.159
    0.001239 Sandler, Adam (I)             45 0.004645 Grady, Kevin (I)              12       1.00   215.267
----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------
 Found 1688 records. Printed only 30.

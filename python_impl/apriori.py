@@ -3,6 +3,7 @@ from dataclasses import dataclass
 import math
 import sys
 from typing import Tuple
+from decimal import Decimal
 
 @dataclass
 class Result():
@@ -16,14 +17,26 @@ class Result():
     lift: float
 
 def precision(v: float) -> float:
-    digits = 7
-    return math.floor(v * 10**digits)/(10**digits)
+    """
+    apriori.scala used 7 digits for truncation, but python does some weird rounding stuff so I needed to use 8 digits here
+    """
+    digits = 8
+    return float(math.floor(v * 10**digits)/(10**digits))
 
 class APriori:
     def __init__(self):
         """ """
 
     def firstPass(self, filename:str, delim:str, threshold:float) -> Tuple[int, int, dict[str, int]]:
+        """
+        perform first pass of the apriori algorithm
+
+        inputs: filename - file to iterate
+        delim: delimiter to separate basket items
+        threshold: number between (0,1] to determine support threshold for items
+
+        output: (basket count, dict[item,frequency])
+        """
         freq_items_unfiltered = {}
         count = 0
 
@@ -49,6 +62,9 @@ class APriori:
 
 
     def permute(self, lst: list):
+        """
+        returns all permutations of a list as tuples
+        """
         if len(lst) > 1:
             for idx, item in enumerate(lst):
                 for item2 in lst[idx+1:]:
@@ -57,6 +73,16 @@ class APriori:
             return []
 
     def secondPass(self, filename:str, delim:str, support:int, items:dict[str,int]) -> dict[(str,str), int]:
+        """
+        perform second pass of the apriori algorithm
+
+        inputs: filename - file to iterate
+        delim: delimiter to separate basket items
+        support: minimum frequency to keep
+
+        output: (dict[(frequent item1, bought with item),frequency]) about frequency specified by `support`
+        """
+
         freq_pairs = {}
 
         with open(filename, "r") as in_file:
@@ -88,7 +114,9 @@ class APriori:
         return freq_pairs_filtered
 
     def _getResult(self, count: int, items: dict[str, int], pair: Tuple[str, str], pairFreq: int) -> Result:
-        """ """
+        """
+        Calculate statistics of an item pair 
+        """
         itemFreq = items[pair[0]]
         pairItemFreq = items[pair[1]]
 
@@ -99,7 +127,7 @@ class APriori:
 
         # val lift = supportPair / (supportItem * (pairItemFreq.toDouble / count))
         # lift = confidence / (float(itemFreq) / count)
-        lift = supportPair / (supportItem * (float(pairItemFreq) / count))
+        lift = float(supportPair) / (supportItem * (float(pairItemFreq) / count))
 
         itemName = pair[0]
         boughtWith = pair[1]
@@ -108,7 +136,10 @@ class APriori:
 
 
     def getResults(self, count: int, items: dict[str, int], freq_pairs: dict[Tuple[str,str], int], limit=None):
-        """ """
+        """ 
+        Get results from frequency pairs and print them to screen
+        
+        """
 
         results = []
         for pair in freq_pairs:
