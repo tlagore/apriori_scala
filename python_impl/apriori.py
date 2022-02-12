@@ -3,7 +3,6 @@ from dataclasses import dataclass
 import math
 import sys
 from typing import Tuple
-from decimal import Decimal
 
 @dataclass
 class Result():
@@ -137,8 +136,7 @@ class APriori:
 
     def getResults(self, count: int, items: dict[str, int], freq_pairs: dict[Tuple[str,str], int], limit=None):
         """ 
-        Get results from frequency pairs and print them to screen
-        
+        Get results from frequency pairs and print them to screen        
         """
 
         results = []
@@ -158,13 +156,16 @@ class APriori:
         print("Found {0} records.{1}".format(len(sorted_list), " Printed only {0}.".format(limit) if limit and limit < len(results) else ""))
 
     def printResults(self, results: list[Result]):
+        """
+        Print records to stdout
+        """
         maxWidth = max(20, len(max(results, key=lambda res:len(res.item)).item) + 2)
 
         header = "SupportPair-{item:<{maxWidth}}- Freq -Support-{boughtWith:{maxWidth2}}- FreqPair-Confidence-     Lift".format(item="Item", maxWidth=maxWidth, boughtWith="Bought with", maxWidth2=maxWidth-4)
         sep = ['-'] * len(header)
         print(header)
         print(''.join(sep))
-        # s"  %9.6f %-${maxWidth}s %5d %8.6f %-${maxWidth2}s %5d %10.2f %9.3f".format(
+
         for res in results:
             print("  {0:9.6f} {1:{maxWidth}} {2:5d} {3:8.6f} {4:{maxWidth2}} {5:5d} {6:10.2f} {7:9.3f}".format(
                 res.supportPair, res.item, res.freqItem, res.support, res.boughtWith, res.freqPair, 
@@ -190,8 +191,6 @@ if __name__ == "__main__":
         filename, delim, threshold,
         "" if limit is None else f" Print at most {limit} tuples."
     ), file=sys.stderr)
-    # print("" if limit is None else f"Print at most {limit} tuples.", file=sys.stderr)
-    # print("")
 
     apriori = APriori()
     (count, support, items) = apriori.firstPass(filename, delim, threshold)
@@ -199,7 +198,5 @@ if __name__ == "__main__":
     print(f"""{count} records, only {len(items)} item{"s" if (len(items) > 1) else ""} above support threshold {support} ({threshold}).\n""")
 
     freq_pairs = apriori.secondPass(filename, delim, support, items)
-
-    # print(f"""{len(freq_pairs)} frequent pair{"s" if (len(freq_pairs) > 1) else ""}""")
 
     apriori.getResults(count, items, freq_pairs, limit)
