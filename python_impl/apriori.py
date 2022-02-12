@@ -2,7 +2,6 @@ from argparse import ArgumentError
 from dataclasses import dataclass
 import math
 import sys
-from typing import Tuple
 
 @dataclass
 class Result():
@@ -15,7 +14,7 @@ class Result():
     confidence: float
     lift: float
 
-def precision(v: float) -> float:
+def precision(v):
     """
     apriori.scala used 7 digits for truncation, but python does some weird rounding stuff so I needed to use 8 digits here
     """
@@ -26,7 +25,7 @@ class APriori:
     def __init__(self):
         """ """
 
-    def firstPass(self, filename:str, delim:str, threshold:float) -> Tuple[int, int, dict[str, int]]:
+    def firstPass(self, filename, delim, threshold):
         """
         perform first pass of the apriori algorithm
 
@@ -60,7 +59,7 @@ class APriori:
         return (count, support, freq_items_filtered)
 
 
-    def permute(self, lst: list):
+    def permute(self, lst):
         """
         returns all permutations of a list as tuples
         """
@@ -71,7 +70,7 @@ class APriori:
         else:
             return []
 
-    def secondPass(self, filename:str, delim:str, support:int, items:dict[str,int]) -> dict[(str,str), int]:
+    def secondPass(self, filename, delim, support, items):
         """
         perform second pass of the apriori algorithm
 
@@ -112,7 +111,7 @@ class APriori:
 
         return freq_pairs_filtered
 
-    def _getResult(self, count: int, items: dict[str, int], pair: Tuple[str, str], pairFreq: int) -> Result:
+    def _getResult(self, count, items, pair, pairFreq):
         """
         Calculate statistics of an item pair 
         """
@@ -134,7 +133,7 @@ class APriori:
         return Result(itemName, boughtWith, itemFreq, pairFreq, precision(supportItem), precision(supportPair), precision(confidence), precision(lift))
 
 
-    def getResults(self, count: int, items: dict[str, int], freq_pairs: dict[Tuple[str,str], int], limit=None):
+    def getResults(self, count, items, freq_pairs, limit=None):
         """ 
         Get results from frequency pairs and print them to screen        
         """
@@ -155,7 +154,7 @@ class APriori:
 
         print("Found {0} records.{1}".format(len(sorted_list), " Printed only {0}.".format(limit) if limit and limit < len(results) else ""))
 
-    def printResults(self, results: list[Result]):
+    def printResults(self, results):
         """
         Print records to stdout
         """

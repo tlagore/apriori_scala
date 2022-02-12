@@ -12,10 +12,9 @@
 ## Bash files for generating test results
 - There are some bash files that emulate the tests in this folder
     - `test01.sh` `test02.sh` `test03.sh`
-    - These have the data location hardcoded to `../code/data/<csvfile>`
-
+    - These require the data directory be passed in
 - Usage:
-    - `sh test01.sh > test01.results`
+    - `sh test01.sh ../code/data/ > test01.results`
 
 ## Test all at once
  - `test_all.sh data_dir`
