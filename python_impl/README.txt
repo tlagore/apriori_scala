@@ -1,3 +1,8 @@
+## Implementation
+ - Follows the same alogrithm as implemented in apriori.scala
+ - Uses a mutable dictionary to store the interim frequency results
+ - Uses a mutable dictionary to store the frequency pair results 
+
 ## Running
 - Format is the same as the scala implementation
     `python apriori.py datafile delimiter threshold [maxrecords]`
